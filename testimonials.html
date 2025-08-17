@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bella Vista Restaurant - Testimonials</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <section class="testimonials">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonial-container">
+      <!-- Testimonials will be dynamically added here -->
+    </div>
+  </section>
+
+  <script>
+    async function fetchTestimonials() {
+      try {
+        const response = await fetch('/api/testimonials');
+        const data = await response.json();
+        renderTestimonials(data);
+      } catch (error) {
+        console.error('Error fetching testimonials:', error);
+      }
+    }
+
+    function renderTestimonials(testimonials) {
+      const container = document.querySelector('.testimonial-container');
+      container.innerHTML = '';
+
+      testimonials.forEach(testimonial => {
+        const testimonialElement = document.createElement('div');
+        testimonialElement.classList.add('testimonial');
+
+        const quoteElement = document.createElement('blockquote');
+        quoteElement.textContent = testimonial.quote;
+
+        const authorElement = document.createElement('cite');
+        authorElement.textContent = testimonial.author;
+
+        testimonialElement.appendChild(quoteElement);
+        testimonialElement.appendChild(authorElement);
+        container.appendChild(testimonialElement);
+      });
+    }
+
+    fetchTestimonials();
+  </script>
+</body>
+</html>
+
+FILENAME: worker.js
